@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/project.css">
+    <title>todo-js</title>
+</head>
+<body>
+    <div id="nav">
+        <ul>
+            <li><a id="nav-logo" href="#">todo-js</a></li>
+            <li><div id="nav-separator" class="separator"></div></li>
+            <li><a id="nav-project-title" href="#">project title</a></li>
+        </ul>
+    </div>
+        <!-- end of nav -->
+    <div id="wrapper">
+        <div id="project">
+            <h1 id="project-heading">My Project</h1>
+            <div id="project-layout-left" class="layout">
+                <div class="project-container">
+                    <div class="project-box">
+                        <h3 class="project-box-title">PROJECT</h3>
+                    </div>
+                    <div class="project-box">
+                        <h3 class="project-box-title">PROJECT</h3>
+                    </div>
+                    <div class="project-box">
+                        <h3 class="project-box-title">PROJECT</h3>
+                    </div>
+                    <div id="project-box-add" class="project-box">
+                        <img id="add-new" src="../assets/material-icon-add.svg" alt="add_project">
+                    </div>
+                </div>
+            </div>
+            <div id="project-layout-right" class="layout">
+                <div id="form-container" class="project-container">
+                    <form id="todo-form">
+                        <h1 id="form-heading">what do you wanna<br>do today?</h1>
+                        <div class="form-el-section">
+                            <div class="form-container">
+                                <label for="title">Title</label><br>
+                                <input type="text" name="title_col" id="title_col">
+                            </div>
+                            <div class="form-container">
+                                <label for="title">Due Date</label><br>
+                                <input type="date" name="date_col" id="date_col">
+                            </div>
+                        </div>
+                        <div class="form-el-section">
+                            <div class="form-container">
+                                <label for="title">Priority</label><br>
+                                <select name="prior_col" id="prior_col">
+                                    <option value="">chill</option>
+                                    <option value="">normal</option>
+                                    <option value="">urgent</option>
+                                </select>
+                            </div>
+                            <div class="form-container status">
+                                <label for="status">Status</label><br>
+                                <input type="checkbox" name="done_col" id="done_col">
+                                <label for="">completed</label>
+                            </div>
+                        </div>
+                        <div class="form-el-section below">
+                            <div class="form-container">
+                                <label for="title">Title</label><br>
+                                <textarea name="" id="" cols="40" rows="9"></textarea>
+                                <div id="form-submit-btn">SUBMIT</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
