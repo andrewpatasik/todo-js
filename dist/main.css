@@ -69,6 +69,10 @@ a{
     margin-top: 30px;
 }
 
+#add-new:hover{
+    cursor: pointer;
+}
+
 /* nav */
 
 #nav{
