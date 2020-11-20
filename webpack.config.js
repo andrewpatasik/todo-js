@@ -37,10 +37,6 @@ module.exports = {
           }
         }
       },
-      {
-        test: require.resolve('wow.js/dist/wow.js'), 
-        loader: 'exports?this.WOW'
-      },
     ],
   },
   plugins: [
