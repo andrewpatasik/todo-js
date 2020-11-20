@@ -3,7 +3,7 @@ import { projectContainerComponent } from './projectContainerComponent';
 import { projectBoxComponent, projectBoxAddComponent } from './projectBoxComponent';
 
 let projectContainer = projectContainerComponent('home-project').div;
-let projectBox = projectBoxComponent('my Project');
+let projectBox = projectBoxComponent('My Project');
 let projectAddBox = projectBoxAddComponent();
 
 let projectArray = [];
@@ -15,10 +15,10 @@ const homeDiv = () => {
 }
 
 const homeTitle = () => {
-    let h2 = document.createElement('h2');
-    h2.setAttribute('id', 'home-title');
-    h2.innerHTML = 'Create New Project';
-    return h2;
+    let h1 = document.createElement('h1');
+    h1.setAttribute('id', 'home-title');
+    h1.innerHTML = 'Create New Project';
+    return h1;
 }
 
 const homeComponent = () => {
@@ -28,12 +28,13 @@ const homeComponent = () => {
     let h2 = homeTitle();
 
     for (let index = 0; index < projectArray.length; index++) {
-        projectContainer.appendChild(projectArray[index].box);        
+        projectContainer.appendChild(projectArray[index].box);
     }
     projectContainer.appendChild(projectAddBox);       //insert to last
     homeLayout.appendChild(h2);
     homeLayout.appendChild(projectContainer);
     mainDiv.appendChild(homeLayout);
+    
     return mainDiv;
 }
 

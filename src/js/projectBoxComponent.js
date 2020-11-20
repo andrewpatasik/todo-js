@@ -7,12 +7,17 @@ const projectBoxComponent = (projectTitle) => {
         let div = document.createElement('div');
         div.setAttribute('id', 'box-' + count);
         div.classList.add('project-box');
-    
+        div.classList.add('animate__animated');
+        div.classList.add('animate__fadeInDown');
         let h3 = document.createElement('h3');
         h3.setAttribute('id', 'title-' + count);
         h3.classList.add('project-box-title');
-        h3.innerHTML = projectTitle;
-    
+        h3.innerHTML = projectTitle + ' ' + count;
+        div.addEventListener('animationend', () => {
+            div.classList.remove('animate__animated');
+            div.classList.remove('animate__fadeInDown');
+            console.log('work');
+        })
         div.appendChild(h3);
         return div;
     }

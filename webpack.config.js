@@ -27,6 +27,20 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.m?js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env']
+          }
+        }
+      },
+      {
+        test: require.resolve('wow.js/dist/wow.js'), 
+        loader: 'exports?this.WOW'
+      },
     ],
   },
   plugins: [
