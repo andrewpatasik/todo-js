@@ -93,6 +93,10 @@ function addTask(){
   let input = document.querySelector('#new-task-col');
   let taskList = document.getElementById('task-list');
   addBtn.addEventListener('click', () => {
+    if (input.value === '') {
+      alert("must add task");
+      return;
+    }
     let listEl = DomFactory().createItem('task-item');
     listEl.setAttribute('id', 'task-' + count);
     let li = listEl;
