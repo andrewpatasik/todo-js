@@ -45,10 +45,15 @@ function createImage(id, src, alt){
 
 function createList(id){
   let ulEl = document.createElement('ul');
-  let liEl = document.createElement('div');
   ulEl.setAttribute('id', id);
-  ulEl.appendChild(liEl);
   return ulEl;
+}
+
+function createItem(className){
+  let liEl = document.createElement('div');
+  liEl.classList.add(className);
+  // liEl.setAttribute('onclick', 'myFunction()');
+  return liEl;
 }
 
 return {
@@ -56,7 +61,8 @@ return {
   createHeading,
   createInput,
   createImage,
-  createList
+  createList,
+  createItem
 }
 }
 
@@ -66,38 +72,38 @@ function loadElement(){
   let taskListContainerEl = DomFactory().createDiv('list-container','task-list-container');
   let inputColumnEl = DomFactory().createInput('text','','new-task-col');
   let imageEl = DomFactory().createImage('add-task','./assets/material-icon-add.svg','add');
-  
+  let taskList = DomFactory().createList('task-list');
+
   wrapperDiv.appendChild(headingEl);
   wrapperDiv.appendChild(newTaskContainerEl);
   newTaskContainerEl.appendChild(inputColumnEl);
   newTaskContainerEl.appendChild(imageEl);
   wrapperDiv.appendChild(newTaskContainerEl);
+
+  taskListContainerEl.appendChild(taskList);
   wrapperDiv.appendChild(taskListContainerEl);
 };
 loadElement();
 
 let taskArray = [];
+let addBtn = document.querySelector('#add-task');
 
 function addTask(){
-  let addBtn = document.querySelector('#add-task');
+  let count = 1;
   let input = document.querySelector('#new-task-col');
+  let taskList = document.getElementById('task-list');
   addBtn.addEventListener('click', () => {
-    let taskList = document.getElementById('list-container');
-    let listEl = DomFactory().createList('task-list');
+    let listEl = DomFactory().createItem('task-item');
+    listEl.setAttribute('id', 'task-' + count);
+    let li = listEl;
     console.log(input.value + ' ' + 'added.');
-    listEl.textContent = input.value;
-    taskArray.push(
-      {
-        task: input.value,
-        dateCreate: format(new Date(), "iiii"),
-      }
-      );
-    taskList.appendChild(listEl);
+    li.textContent = input.value;
+    taskArray.push( { id: count++, task: input.value, timeStamp: format(new Date(), "iiii") } );
+    taskList.appendChild(li);
     input.value = '';
     console.table(taskArray);
   });
 }
 addTask();
-
 
 // console.log(taskList);
