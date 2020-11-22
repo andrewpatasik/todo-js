@@ -113,7 +113,6 @@ function createTaskCard(){
     listEl.setAttribute('id', 'task-' + itemId);
     listEl.textContent = itemTask;
     taskList.appendChild(listEl);
-    console.log(taskArray[index].id);
   }
 }
 
@@ -141,14 +140,8 @@ function getItemById(){
   // let itemList = Array.from(taskItem);
   for (let index = 0; index < taskItem.length; index++) {
       taskItem[index].addEventListener('click', () => {
-        // element.classList.toggle('task-done');
-        console.log(taskItem[index].length);
+        taskItem[index].classList.toggle('task-done');
+        console.log(taskItem[index]);
       })
   }
-  // itemList.forEach(element => {
-  //   element.addEventListener('click', () => {
-  //     // element.classList.toggle('task-done');
-  //     console.log(element);
-  //   })
-  // });
 }
