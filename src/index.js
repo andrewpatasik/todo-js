@@ -87,27 +87,68 @@ loadElement();
 
 let taskArray = [];
 let addBtn = document.querySelector('#add-task');
+let taskList = document.getElementById('task-list');
 
-function addTask(){
-  let count = 1;
+function add(id){
   let input = document.querySelector('#new-task-col');
-  let taskList = document.getElementById('task-list');
-  addBtn.addEventListener('click', () => {
     if (input.value === '') {
       alert("must add task");
       return;
     }
-    let listEl = DomFactory().createItem('task-item');
-    listEl.setAttribute('id', 'task-' + count);
-    let li = listEl;
-    console.log(input.value + ' ' + 'added.');
-    li.textContent = input.value;
-    taskArray.push( { id: count++, task: input.value, timeStamp: format(new Date(), "iiii") } );
-    taskList.appendChild(li);
+    
+    taskArray.push( { id: id, task: input.value, timeStamp: format(new Date(), "iiii") } );
+    createTaskCard();
+    
     input.value = '';
+    input.focus();
     console.table(taskArray);
-  });
+}
+
+function createTaskCard(){
+  refreshList();
+  for (let index = 0; index < taskArray.length; index++) {
+    let itemId = taskArray[index].id;
+    let itemTask = taskArray[index].task;
+    let listEl = DomFactory().createItem('task-item');
+    listEl.setAttribute('id', 'task-' + itemId);
+    listEl.textContent = itemTask;
+    taskList.appendChild(listEl);
+    console.log(taskArray[index].id);
+  }
+}
+
+function refreshList(){
+  let parentNode = taskList;
+  let childNode = parentNode.lastElementChild;
+  while (childNode) {
+    parentNode.removeChild(childNode);
+    childNode = parentNode.lastElementChild;
+  }
+}
+
+function addTask(){
+  let idCounter = 1;
+  addBtn.addEventListener('click', () => {
+    add(idCounter);
+    idCounter++;
+    getItemById();
+  })  
 }
 addTask();
 
-// console.log(taskList);
+function getItemById(){
+  let taskItem = document.querySelectorAll('.task-item');
+  // let itemList = Array.from(taskItem);
+  for (let index = 0; index < taskItem.length; index++) {
+      taskItem[index].addEventListener('click', () => {
+        // element.classList.toggle('task-done');
+        console.log(taskItem[index].length);
+      })
+  }
+  // itemList.forEach(element => {
+  //   element.addEventListener('click', () => {
+  //     // element.classList.toggle('task-done');
+  //     console.log(element);
+  //   })
+  // });
+}
