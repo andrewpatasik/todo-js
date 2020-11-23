@@ -95,8 +95,8 @@ function add(id){
       alert("must add task");
       return;
     }
-    
-    taskArray.push( { id: id, task: input.value, timeStamp: format(new Date(), "iiii") } );
+    let task = new Task(id, input.value, false);
+    taskArray.push( task );
     createTaskCard();
     
     input.value = '';
@@ -104,13 +104,28 @@ function add(id){
     console.table(taskArray);
 }
 
+class Task{
+  constructor(id, task, toggle){
+    this.id = id;
+    this.task = task;
+    this.toggle = toggle;
+    this.timeStamp = this.setTimeStamp();
+  }
+  setTimeStamp(){
+    return format(new Date(), "iiii");
+  }
+}
+
 function createTaskCard(){
   refreshList();
   for (let index = 0; index < taskArray.length; index++) {
     let itemId = taskArray[index].id;
     let itemTask = taskArray[index].task;
+    let isTrue = taskArray[index].toggle;
     let listEl = DomFactory().createItem('task-item');
     listEl.setAttribute('id', 'task-' + itemId);
+    isTrue === true ? listEl.classList.add('task-done') : 
+                      listEl.classList.remove('task-done');
     listEl.textContent = itemTask;
     taskList.appendChild(listEl);
   }
@@ -139,9 +154,18 @@ function getItemById(){
   let taskItem = document.querySelectorAll('.task-item');
   // let itemList = Array.from(taskItem);
   for (let index = 0; index < taskItem.length; index++) {
-      taskItem[index].addEventListener('click', () => {
-        taskItem[index].classList.toggle('task-done');
-        console.log(taskItem[index]);
+    let isTrue = taskArray[index].toggle;
+    taskItem[index].addEventListener('click', () => {
+      if (isTrue !== true) {
+        taskItem[index].classList.add('task-done')
+        taskArray[index].toggle = true;
+        isTrue = taskArray[index].toggle;
+      } else if (isTrue === true) {
+        taskItem[index].classList.remove('task-done');
+        taskArray[index].toggle = false;
+        isTrue = taskArray[index].toggle;
+      }
+        // console.log(taskArray[index]);
       })
   }
 }
