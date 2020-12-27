@@ -49,11 +49,25 @@ function createList(id){
   return ulEl;
 }
 
-function createItem(className){
-  let liEl = document.createElement('div');
-  liEl.classList.add(className);
+function createItem(className, itemContent, timeCreated){
+  //initialize item element
+  let itemCard = document.createElement('div');
+  let par = document.createElement('p');
+  let taskDue = document.createElement('div');
+  let delEl = document.createElement('div');
+  let editEl = document.createElement('div');
+  itemCard.classList.add(className);
+  par.textContent = itemContent;
+  taskDue.classList.add('task-due');
+  taskDue.textContent = timeCreated;
+  delEl.classList.add('del-task');
+  editEl.classList.add('edit-task');
+  itemCard.appendChild(par);
+  itemCard.appendChild(taskDue);
+  itemCard.appendChild(delEl);
+  itemCard.appendChild(editEl);
   // liEl.setAttribute('onclick', 'myFunction()');
-  return liEl;
+  return itemCard;
 }
 
 return {
@@ -112,7 +126,9 @@ class Task{
     this.timeStamp = this.setTimeStamp();
   }
   setTimeStamp(){
-    return format(new Date(), "iiii");
+    let f = 'iiii, HH:mm:ss';
+    // return format(new Date(), "iiii");
+    return format(new Date(), f);
   }
 }
 
@@ -121,12 +137,12 @@ function createTaskCard(){
   for (let index = 0; index < taskArray.length; index++) {
     let itemId = taskArray[index].id;
     let itemTask = taskArray[index].task;
+    let timeCreated = taskArray[index].timeStamp;
     let isTrue = taskArray[index].toggle;
-    let listEl = DomFactory().createItem('task-item');
+    let listEl = DomFactory().createItem('task-item', itemTask, timeCreated);
     listEl.setAttribute('id', 'task-' + itemId);
     isTrue === true ? listEl.classList.add('task-done') : 
                       listEl.classList.remove('task-done');
-    listEl.textContent = itemTask;
     taskList.appendChild(listEl);
   }
 }
