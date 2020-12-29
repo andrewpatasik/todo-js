@@ -66,7 +66,6 @@ function createItem(className, itemContent, timeCreated){
   itemCard.appendChild(taskDue);
   itemCard.appendChild(delEl);
   itemCard.appendChild(editEl);
-  // liEl.setAttribute('onclick', 'myFunction()');
   return itemCard;
 }
 
@@ -102,86 +101,82 @@ loadElement();
 let taskArray = [];
 let addBtn = document.querySelector('#add-task');
 let taskList = document.getElementById('task-list');
+let input = document.querySelector('#new-task-col');
+let id = 1;
 
-function add(id){
-  let input = document.querySelector('#new-task-col');
+function add(){
     if (input.value === '') {
-      alert("must add task");
+      alert("should add task");
       return;
     }
     let task = new Task(id, input.value, false);
     taskArray.push( task );
-    createTaskCard();
+    renderList();
     
     input.value = '';
     input.focus();
     console.table(taskArray);
+    id++;
 }
 
 class Task{
-  constructor(id, task, toggle){
+  constructor(id, task){
     this.id = id;
     this.task = task;
-    this.toggle = toggle;
     this.timeStamp = this.setTimeStamp();
   }
   setTimeStamp(){
-    let f = 'iiii, HH:mm:ss';
-    // return format(new Date(), "iiii");
-    return format(new Date(), f);
+    let timeFormat = 'iiii, HH:mm';
+    return format(new Date(), timeFormat);
   }
 }
 
-function createTaskCard(){
-  refreshList();
+function renderList(){
+  clearList();
   for (let index = 0; index < taskArray.length; index++) {
     let itemId = taskArray[index].id;
     let itemTask = taskArray[index].task;
     let timeCreated = taskArray[index].timeStamp;
-    let isTrue = taskArray[index].toggle;
+    
     let listEl = DomFactory().createItem('task-item', itemTask, timeCreated);
     listEl.setAttribute('id', 'task-' + itemId);
-    isTrue === true ? listEl.classList.add('task-done') : 
-                      listEl.classList.remove('task-done');
+    
     taskList.appendChild(listEl);
   }
 }
 
-function refreshList(){
-  let parentNode = taskList;
-  let childNode = parentNode.lastElementChild;
-  while (childNode) {
-    parentNode.removeChild(childNode);
-    childNode = parentNode.lastElementChild;
+function clearList(){
+  while (taskList.firstChild) {
+    taskList.removeChild(taskList.firstChild)
   }
 }
 
-function addTask(){
-  let idCounter = 1;
-  addBtn.addEventListener('click', () => {
-    add(idCounter);
-    idCounter++;
-    getItemById();
-  })  
-}
-addTask();
-
-function getItemById(){
-  let taskItem = document.querySelectorAll('.task-item');
-  // let itemList = Array.from(taskItem);
-  for (let index = 0; index < taskItem.length; index++) {
-    let isTrue = taskArray[index].toggle;
-    taskItem[index].addEventListener('click', () => {
-      if (isTrue !== true) {
-        taskItem[index].classList.add('task-done')
-        taskArray[index].toggle = true;
-        isTrue = taskArray[index].toggle;
-      } else if (isTrue === true) {
-        taskItem[index].classList.remove('task-done');
-        taskArray[index].toggle = false;
-        isTrue = taskArray[index].toggle;
-      }
-        // console.log(taskArray[index]);
-      })
+input.addEventListener('keyup', (event) => {
+  if(event.keyCode === 13) {
+    event.preventDefault();
+    add();
   }
-}
+})
+
+addBtn.addEventListener('click', () => {
+    add();
+})  
+
+taskList.addEventListener('click', (e) => {
+  let items = document.querySelectorAll('.del-task');
+  for (let index = 0; index < items.length; index++) {
+    items[index].addEventListener('click', () => {
+      taskArray.splice(index, 1);
+      renderList();
+      console.table(taskArray);
+    })
+  }
+}, true)  //event capture
+
+// taskList.addEventListener('click', (e) => {
+//   let t = e.target;
+//   let items = document.querySelectorAll('.task-item');
+//   t.addEventListener('click', () => {
+//     console.log(items);
+//   })
+// },true)
