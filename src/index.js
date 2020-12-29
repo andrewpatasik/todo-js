@@ -139,8 +139,17 @@ function renderList(){
     let timeCreated = taskArray[index].timeStamp;
     
     let listEl = DomFactory().createItem('task-item', itemTask, timeCreated);
+    let editTaskContainer = DomFactory().createDiv(null, 'edit-col-container');
+    let editTaskInputCol = DomFactory().createInput('text',null,null);
+    let saveEditBtn = DomFactory().createImage(null, './assets/material-icon-add.svg','save-edit');
+    editTaskContainer.classList.add('hid');
+    editTaskInputCol.classList.add('task-edit-col');
+    saveEditBtn.classList.add('save-task');
     listEl.setAttribute('id', 'task-' + itemId);
     
+    editTaskContainer.appendChild(editTaskInputCol);
+    editTaskContainer.appendChild(saveEditBtn);
+    listEl.appendChild(editTaskContainer);
     taskList.appendChild(listEl);
   }
 }
@@ -163,20 +172,34 @@ addBtn.addEventListener('click', () => {
 })  
 
 taskList.addEventListener('click', (e) => {
-  let items = document.querySelectorAll('.del-task');
-  for (let index = 0; index < items.length; index++) {
-    items[index].addEventListener('click', () => {
-      taskArray.splice(index, 1);
-      renderList();
-      console.table(taskArray);
-    })
+  let activities = e.target.className;
+  if (activities === 'del-task') {
+    let items = document.querySelectorAll('.del-task');
+    for (let index = 0; index < items.length; index++) {
+      items[index].addEventListener('click', () => {
+        taskArray.splice(index, 1);
+        renderList();
+        console.table(taskArray);
+      })
+    }
+  } else if (activities === 'edit-task'){
+    let tasks = document.querySelectorAll('.task-item');
+    let items = document.querySelectorAll('.edit-task');
+    for (let index = 0; index < items.length; index++) {
+      items[index].addEventListener('click', () => {
+        tasks[index].firstChild.classList.add('hid');
+        tasks[index].childNodes[4].classList.remove('hid');
+      })
+    }
+  } else if (activities === 'save-task'){
+    let tasks = document.querySelectorAll('.task-item');
+    let items = document.querySelectorAll('.save-task');
+    for (let index = 0; index < items.length; index++) {
+      items[index].addEventListener('click', () => {
+        tasks[index].firstChild.classList.remove('hid');
+        tasks[index].childNodes[4].classList.add('hid');
+      })
+    }
   }
+  // console.log(activities);
 }, true)  //event capture
-
-// taskList.addEventListener('click', (e) => {
-//   let t = e.target;
-//   let items = document.querySelectorAll('.task-item');
-//   t.addEventListener('click', () => {
-//     console.log(items);
-//   })
-// },true)

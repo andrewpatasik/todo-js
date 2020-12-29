@@ -121,3 +121,26 @@ img{
     border-radius: 20px;
     background-color: darkseagreen;
 }
+
+.edit-col-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    left: 0;
+    right: 0;
+}
+
+.task-edit-col{
+    float: left;
+    margin-right: 5px;
+}
+
+.save-task{
+    float: left;
+    width: 20px;
+}
+
+.hid {
+    display: none;
+}
