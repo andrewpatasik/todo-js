@@ -52,20 +52,35 @@ function createList(id){
 function createItem(className, itemContent, timeCreated){
   //initialize item element
   let itemCard = document.createElement('div');
-  let par = document.createElement('p');
   let taskDue = document.createElement('div');
   let delEl = document.createElement('div');
   let editEl = document.createElement('div');
+  let editTaskContainer = document.createElement('div');
+  let editTaskInputCol = document.createElement('input');
+  let saveEditBtn = document.createElement('img');
+  let par = document.createElement('p');
+
   itemCard.classList.add(className);
   par.textContent = itemContent;
   taskDue.classList.add('task-due');
   taskDue.textContent = timeCreated;
   delEl.classList.add('del-task');
   editEl.classList.add('edit-task');
+  editTaskContainer.classList.add('edit-col-container');
+  editTaskContainer.classList.add('hid');
+  editTaskInputCol.setAttribute('type', 'text');
+  editTaskInputCol.classList.add('task-edit-col');
+  saveEditBtn.setAttribute('src', './assets/material-icon-add.svg');
+  saveEditBtn.classList.add('save-task');
+
+  editTaskContainer.appendChild(editTaskInputCol);
+  editTaskContainer.appendChild(saveEditBtn);
+
   itemCard.appendChild(par);
   itemCard.appendChild(taskDue);
   itemCard.appendChild(delEl);
   itemCard.appendChild(editEl);
+  itemCard.appendChild(editTaskContainer);
   return itemCard;
 }
 
@@ -139,17 +154,8 @@ function renderList(){
     let timeCreated = taskArray[index].timeStamp;
     
     let listEl = DomFactory().createItem('task-item', itemTask, timeCreated);
-    let editTaskContainer = DomFactory().createDiv(null, 'edit-col-container');
-    let editTaskInputCol = DomFactory().createInput('text',null,null);
-    let saveEditBtn = DomFactory().createImage(null, './assets/material-icon-add.svg','save-edit');
-    editTaskContainer.classList.add('hid');
-    editTaskInputCol.classList.add('task-edit-col');
-    saveEditBtn.classList.add('save-task');
     listEl.setAttribute('id', 'task-' + itemId);
     
-    editTaskContainer.appendChild(editTaskInputCol);
-    editTaskContainer.appendChild(saveEditBtn);
-    listEl.appendChild(editTaskContainer);
     taskList.appendChild(listEl);
   }
 }
@@ -183,17 +189,24 @@ taskList.addEventListener('click', (e) => {
       })
     }
   } else if (activities === 'edit-task'){
-    let tasks = document.querySelectorAll('.task-item');
-    let items = document.querySelectorAll('.edit-task');
+      executeActivities('.edit-task');
+  } else if (activities === 'save-task'){
+      executeActivities('.save-task');
+  }
+  // console.log(activities);
+}, true)  //event capture
+
+function executeActivities(activity){
+  let tasks = document.querySelectorAll('.task-item');
+  let items = document.querySelectorAll(activity);
+  if (activity === '.edit-task') {
     for (let index = 0; index < items.length; index++) {
       items[index].addEventListener('click', () => {
         tasks[index].firstChild.classList.add('hid');
         tasks[index].childNodes[4].classList.remove('hid');
       })
-    }
-  } else if (activities === 'save-task'){
-    let tasks = document.querySelectorAll('.task-item');
-    let items = document.querySelectorAll('.save-task');
+    } 
+  } else if (activity === '.save-task'){
     for (let index = 0; index < items.length; index++) {
       items[index].addEventListener('click', () => {
         tasks[index].firstChild.classList.remove('hid');
@@ -201,5 +214,4 @@ taskList.addEventListener('click', (e) => {
       })
     }
   }
-  // console.log(activities);
-}, true)  //event capture
+}
