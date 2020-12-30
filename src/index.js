@@ -95,7 +95,7 @@ return {
 }
 
 function loadElement(){
-  let headingEl = DomFactory().createHeading('h1','Create New Task');
+  let headingEl = DomFactory().createHeading('h1','My Todo List');
   let newTaskContainerEl = DomFactory().createDiv('','create-new');
   let taskListContainerEl = DomFactory().createDiv('list-container','task-list-container');
   let inputColumnEl = DomFactory().createInput('text','','new-task-col');
@@ -126,11 +126,11 @@ function add(){
     }
     let task = new Task(id, input.value, false);
     taskArray.push( task );
-    renderList();
+    renderList(taskArray);
     
     input.value = '';
     input.focus();
-    console.table(taskArray);
+    // console.table(taskArray);
     id++;
 }
 
@@ -146,17 +146,18 @@ class Task{
   }
 }
 
-function renderList(){
+function renderList(list){
   clearList();
   for (let index = 0; index < taskArray.length; index++) {
-    let itemId = taskArray[index].id;
-    let itemTask = taskArray[index].task;
-    let timeCreated = taskArray[index].timeStamp;
+    let itemId = list[index].id;
+    let itemTask = list[index].task;
+    let timeCreated = list[index].timeStamp;
     
     let listEl = DomFactory().createItem('task-item', itemTask, timeCreated);
     listEl.setAttribute('id', 'task-' + itemId);
     
     taskList.appendChild(listEl);
+    console.log(list);
   }
 }
 
@@ -184,8 +185,8 @@ taskList.addEventListener('click', (e) => {
     for (let index = 0; index < items.length; index++) {
       items[index].addEventListener('click', () => {
         taskArray.splice(index, 1);
-        renderList();
-        console.table(taskArray);
+        console.log('item has been deleted');
+        renderList(taskArray);
       })
     }
   } else if (activities === 'edit-task'){
@@ -199,6 +200,7 @@ taskList.addEventListener('click', (e) => {
 function executeActivities(activity){
   let tasks = document.querySelectorAll('.task-item');
   let items = document.querySelectorAll(activity);
+  let editColumn = document.querySelectorAll('.task-edit-col');
   if (activity === '.edit-task') {
     for (let index = 0; index < items.length; index++) {
       items[index].addEventListener('click', () => {
@@ -209,6 +211,11 @@ function executeActivities(activity){
   } else if (activity === '.save-task'){
     for (let index = 0; index < items.length; index++) {
       items[index].addEventListener('click', () => {
+        // console.log(tasks[index].childNodes[4].firstChild.value);
+        // console.log(editColumn[index].value);
+        taskArray[index].task = editColumn[index].value;
+        console.log('item has been edited');
+        renderList(taskArray);
         tasks[index].firstChild.classList.remove('hid');
         tasks[index].childNodes[4].classList.add('hid');
       })
