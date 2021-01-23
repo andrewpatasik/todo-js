@@ -1,1 +1,0 @@
-todo-js is a part of assignment from The Odin Project
