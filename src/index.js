@@ -1,4 +1,3 @@
-// 
 import './styles/main.css';
 import { format, formatDistance, formatRelative, subDays } from 'date-fns'
 

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500&display=swap');
+
 #wrapper{
     margin:100px auto;
     text-align: center;
@@ -19,7 +21,7 @@
 
 h1{
     margin: 0;
-    font-family: 'Bebas Neue';
+    font-family: 'Fira Sans', sans-serif;
     font-size: 46px;
     letter-spacing: 0.2em;
 }
@@ -86,7 +88,7 @@ img{
     background-color: #67568c;
     color: #ff6e6c;
     box-shadow: 1px 4px 6px slategray;
-    font-family: 'Roboto Mono';
+    font-family: 'Fira Sans', sans-serif;
     font-weight: 500;
     font-size: 16px;
 }
